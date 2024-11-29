@@ -3,6 +3,7 @@ import React, { createContext, useState } from 'react'
 import PropTypes from 'prop-types';
 import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
 import auth from '../firebase-config'
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export const AuthContext=createContext(null);
 
@@ -20,8 +21,14 @@ const AuthProvider = ({children}) => {
         
         return createUserWithEmailAndPassword(auth,email,password)
     }
+
+    const loginUser=(email,password)=>{
+        return signInWithEmailAndPassword(auth, email, password)
+  
+
+    }
     
-    const authInfo ={user,createUser}
+    const authInfo ={user,createUser,loginUser}
 
 
 
@@ -47,7 +54,7 @@ const AuthProvider = ({children}) => {
 
 export default AuthProvider
 
-AuthProvider.PropTypes ={
+AuthProvider.propTypes ={
     children: PropTypes.node
 
 }

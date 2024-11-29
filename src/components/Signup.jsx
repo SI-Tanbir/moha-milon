@@ -1,6 +1,40 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "./AuthProvider";
 
 const Signup = () => {
+
+
+  const {createUser}=useContext(AuthContext);
+
+  console.log(createUser);
+  
+  const handleSignup=(e)=>{
+
+    e.preventDefault();
+
+    const email=e.target.email.value;
+    const password=e.target.password.value;
+
+    createUser(email,password)
+    .then( result => {
+      console.log(result.user)
+    }
+
+    )
+    .catch(
+      error =>{
+        console.error(error)
+      }
+    )
+
+
+    
+
+
+    
+  }
+
+  
   return (
     <div>
         
@@ -8,7 +42,8 @@ const Signup = () => {
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
           
-            <form  className="card-body">
+            <form onSubmit={handleSignup} className="card-body">
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -18,6 +53,7 @@ const Signup = () => {
                   placeholder="email"
                   className="input input-bordered"
                   required
+                  name="email"
                 />
               </div>
               <div className="form-control">
@@ -25,6 +61,8 @@ const Signup = () => {
                   <span className="label-text">Password</span>
                 </label>
                 <input
+
+                  name="password"
                   type="password"
                   placeholder="password"
                   className="input input-bordered"
@@ -32,7 +70,7 @@ const Signup = () => {
                 />
               </div>
               <div className="form-control mt-6">
-                <button className="btn bg-pink-500">Signup</button>
+                <input className="bg-pink-500 rounded-md p-2" type="submit" value="submit" />
               </div>
             </form> 
 
