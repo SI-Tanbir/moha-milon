@@ -1,14 +1,23 @@
 
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types';
 import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
 import auth from '../firebase-config'
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 export const AuthContext=createContext(null);
 
 
 const AuthProvider = ({children}) => {
+
+
+
+    const logout =()=>{
+
+        return signOut(auth)
+        
+        }
+
 
 
     const [user,setUser] =useState(null);
@@ -28,23 +37,29 @@ const AuthProvider = ({children}) => {
 
     }
 
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
-          const uid = user.uid;
-          console.log(uid);
-          // ...
-        } else {
-          // User is signed out
-          // ...
-        }
-      });
+
+    useEffect(()=>{
+
+       const unSubscribe= onAuthStateChanged(auth, (currentUser) => {
+
+        console.log('current value of the current user',currentUser);
+        setUser(currentUser);
+
+          });
+
+          return ()=>{
+            unSubscribe();
+          }
+
+
+    },[])
+
+    
 
 
 
     
-    const authInfo ={user,createUser,loginUser}
+    const authInfo ={user,createUser,loginUser,logout}
 
 
 

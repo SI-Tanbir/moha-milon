@@ -5,14 +5,35 @@ import { AuthContext } from './AuthProvider'
 
 const Home = () => {
 
-  const authInfo =useContext(AuthContext);
+  const {user} =useContext(AuthContext);
+  const {logout} =useContext(AuthContext)
 
-  console.log(authInfo)
+  // const {email}=user
+
+  const handleSignout =()=>{
+
+    logout()
+    .then( res=>{
+      console.log('logout successful ',res)
+    })
+
+    .catch(error =>{
+      console.error(error)
+    })
+
+
+  }
+
+
+    
+
+
   return (
-    <div>
+    <div className='flex'>
 
-        <h4>this is home of :{authInfo.name}</h4>
+        <h4>this is home of : {user && user?.email} </h4>
         
+        {user && <button onClick={handleSignout} className=' my-4 bg-red-600 p-3 rounded'>Signout</button>}
     </div>
   )
 }
