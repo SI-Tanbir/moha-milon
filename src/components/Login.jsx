@@ -13,6 +13,23 @@ const handleLogin=(e)=>{
   const password=e.target.password.value;
   console.log(email,password)
   console.log(loginUser)
+  loginUser(email,password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorMessage);
+
+  });
+
+
+
 
 }
   
