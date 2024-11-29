@@ -3,7 +3,7 @@ import React, { createContext, useState } from 'react'
 import PropTypes from 'prop-types';
 import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
 import auth from '../firebase-config'
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 
 export const AuthContext=createContext(null);
 
@@ -27,6 +27,22 @@ const AuthProvider = ({children}) => {
   
 
     }
+
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/auth.user
+          const uid = user.uid;
+          console.log(uid);
+          // ...
+        } else {
+          // User is signed out
+          // ...
+        }
+      });
+
+
+
     
     const authInfo ={user,createUser,loginUser}
 
