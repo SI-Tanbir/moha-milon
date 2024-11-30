@@ -7,13 +7,13 @@ import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebas
 
 export const AuthContext=createContext(null);
 
-
 const AuthProvider = ({children}) => {
+  const [loading,setLoading] =useState(true);
 
 
 
     const logout =()=>{
-
+      setLoading(true)
         return signOut(auth)
         
         }
@@ -22,16 +22,20 @@ const AuthProvider = ({children}) => {
 
     const [user,setUser] =useState(null);
 
-
+			
     
     
     
     const createUser=(email,password)=>{
+      setLoading(true)
+
         
         return createUserWithEmailAndPassword(auth,email,password)
     }
 
     const loginUser=(email,password)=>{
+      setLoading(true)
+
         return signInWithEmailAndPassword(auth, email, password)
   
 
@@ -44,6 +48,8 @@ const AuthProvider = ({children}) => {
 
         console.log('current value of the current user',currentUser);
         setUser(currentUser);
+      setLoading(false)
+
 
           });
 
@@ -59,7 +65,7 @@ const AuthProvider = ({children}) => {
 
 
     
-    const authInfo ={user,createUser,loginUser,logout}
+    const authInfo ={user,createUser,loginUser,logout,loading}
 
 
 
