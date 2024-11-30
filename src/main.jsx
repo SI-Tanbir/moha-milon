@@ -7,6 +7,8 @@ import { RouterProvider } from 'react-router-dom';
 import Login from './components/Login.jsx';
 import Signup from './components/Signup.jsx';
 import AuthProvider from './components/AuthProvider.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
 
 
 
@@ -22,6 +24,10 @@ let router = createBrowserRouter([
       {
         path:'/signup',
         element:<Signup></Signup>
+      },
+      {
+        path:'/dashboard',
+        element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>
       }
     ]
   },
